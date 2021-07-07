@@ -4,6 +4,17 @@
 $ npm install
 ```
 
+#### Docker
+
+There is a `docker-compose.yml` file for starting Docker only for database PostgreSQL.
+
+`docker-compose up`
+
+After running the sample, you can stop the Docker container with
+
+`docker-compose down`
+
+
 ## Running the app
 
 ```bash

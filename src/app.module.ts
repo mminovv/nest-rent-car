@@ -13,11 +13,11 @@ import { Car } from './cars/entities/car.entity'
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: process.env.TYPEORM_URL,
-      ssl: {
-        rejectUnauthorized: false,
-      },
-      entities: [Car],
+      host: process.env.POSTGRES_HOST,
+      port: Number(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
       autoLoadEntities: true,
       synchronize: true,
     }),
