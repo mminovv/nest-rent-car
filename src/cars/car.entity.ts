@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Hire } from '../hire/hire.entity'
+
 
 @Entity()
 export class Car {
@@ -16,5 +18,8 @@ export class Car {
 	govNumber: number;
 
 	@Column("varchar", { length: 20 })
-	vin: string
+	vin: string;
+
+	@OneToOne(() => Hire, hire => hire.car)
+	hire: Hire;
 }
