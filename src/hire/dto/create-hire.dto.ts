@@ -1,8 +1,8 @@
+import { IsString, IsNumber, IsNumberString} from 'class-validator';
+
 export class CreateHireDto {
-	id: number;
-	car: number;
-	rate: number;
-	createRateDate: string;
-	endRateDate: string;
-	isAvailable: boolean;
+    rate: number;
+    createRateDate: string;
+    endRateDate: string;
+    isAvailable: boolean;
 }

@@ -1,25 +1,23 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
-import { Hire } from '../hire/hire.entity'
-
+import { Hire } from '../hire/hire.entity';
 
 @Entity()
 export class Car {
+    @PrimaryGeneratedColumn()
+    id: number;
 
-	@PrimaryGeneratedColumn()
-	id: number;
+    @Column('varchar', { length: 200 })
+    carBrand: string;
 
-	@Column("varchar", { length: 200 })
-	carBrand: string;
+    @Column('varchar', { length: 200 })
+    model: string;
 
-	@Column("varchar", { length: 200 })
-	model: string;
+    @Column({ width: 25, type: 'int' })
+    govNumber: number;
 
-	@Column({ width: 25, type: "int"})
-	govNumber: number;
+    @Column('varchar', { length: 20 })
+    vin: string;
 
-	@Column("varchar", { length: 20 })
-	vin: string;
-
-	@OneToOne(() => Hire, hire => hire.car)
-	hire: Hire;
+    @OneToOne(() => Hire, (hire) => hire.car)
+    hire: Hire;
 }

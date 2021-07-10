@@ -1,28 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHireDto } from './dto/create-hire.dto';
 import { UpdateHireDto } from './dto/update-hire.dto';
-import { CarsService } from '../cars/cars.service'
+import { Hire } from './hire.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm'
 
 
 @Injectable()
 export class HireService {
-  create(createHireDto: CreateHireDto) {
-    return 'This action adds a new hire';
-  }
 
-  findAll() {
-    return `This action returns all hire`;
-  }
+    constructor (
+        @InjectRepository(Hire)
+        private readonly hireRepository: Repository<Hire>
+    ) {}
 
-  findOne(id: number) {
-    return `This action returns a #${id} hire`;
-  }
+    async create(CreateHireDto: CreateHireDto): Promise<Hire> {
+        const hire = new Hire();
+        hire.rate = CreateHireDto.rate;
+        hire.createRateDate = CreateHireDto.createRateDate;
+        hire.endRateDate = CreateHireDto.endRateDate;
+        hire.isAvailable = CreateHireDto.isAvailable;
+        return this.hireRepository.save(hire);
+    }
 
-  update(id: number, updateHireDto: UpdateHireDto) {
-    return `This action updates a #${id} hire`;
-  }
+    async findAll(): Promise<Hire[]> {
+        return this.hireRepository.find();
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} hire`;
-  }
+    async findOne(id: number): Promise<Hire> {
+        return this.hireRepository.findOne();
+    }
+
+    async update(id: number, updateHireDto: UpdateHireDto) {
+        return this.hireRepository.update(id, updateHireDto);
+    }
+
+    async remove(id: number): Promise<void> {
+        await this.hireRepository.delete(id);
+    }
 }
