@@ -6,6 +6,7 @@ import {
     JoinColumn,
 } from 'typeorm';
 import { Car } from '../cars/car.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum RateRole {
     FIRSTRATE = 270,
@@ -15,13 +16,23 @@ export enum RateRole {
 
 @Entity()
 export class Hire {
+    /**
+     * The name of Hire car
+     * @example Hire car
+     */
+
     @PrimaryGeneratedColumn()
     id: number;
 
+    @ApiProperty({ description: 'Choice car for hire' })
     @OneToOne(() => Car, (car) => car.hire)
     @JoinColumn()
     car: Car;
 
+    @ApiProperty({
+        description: 'The rate for hire car',
+        enum: ['FIRSTRATE', 'SECONDRATE', 'THIRDRATE'],
+    })
     @Column({
         type: 'enum',
         enum: RateRole,
@@ -29,12 +40,15 @@ export class Hire {
     })
     rate: RateRole;
 
+    @ApiProperty({ description: 'Date created hire' })
     @Column({ type: 'date' })
     createRateDate: string;
 
+    @ApiProperty({ description: 'Date end hire' })
     @Column({ type: 'date' })
     endRateDate: string;
 
+    @ApiProperty({ description: 'The available field' })
     @Column({ default: false })
     isAvailable: boolean;
 }

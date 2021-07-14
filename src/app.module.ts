@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarsModule } from './cars/cars.module';
-import { Car } from './cars/car.entity';
 import { HireModule } from './hire/hire.module';
 
 @Module({

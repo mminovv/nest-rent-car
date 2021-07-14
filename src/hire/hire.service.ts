@@ -3,15 +3,13 @@ import { CreateHireDto } from './dto/create-hire.dto';
 import { UpdateHireDto } from './dto/update-hire.dto';
 import { Hire } from './hire.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm'
-
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class HireService {
-
-    constructor (
+    constructor(
         @InjectRepository(Hire)
-        private readonly hireRepository: Repository<Hire>
+        private readonly hireRepository: Repository<Hire>,
     ) {}
 
     async create(CreateHireDto: CreateHireDto): Promise<Hire> {
@@ -28,7 +26,7 @@ export class HireService {
     }
 
     async findOne(id: number): Promise<Hire> {
-        return this.hireRepository.findOne();
+        return this.hireRepository.findOne(id);
     }
 
     async update(id: number, updateHireDto: UpdateHireDto) {
