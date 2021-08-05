@@ -12,13 +12,16 @@ export class HireService {
         private readonly hireRepository: Repository<Hire>,
     ) {}
 
-    async create(CreateHireDto: CreateHireDto): Promise<Hire> {
-        const hire = new Hire();
-        hire.rate = CreateHireDto.rate;
-        hire.createRateDate = CreateHireDto.createRateDate;
-        hire.endRateDate = CreateHireDto.endRateDate;
-        hire.isAvailable = CreateHireDto.isAvailable;
-        return this.hireRepository.save(hire);
+    async create(createHireDto: CreateHireDto): Promise<Hire> {
+        const hire = await this.hireRepository.create(createHireDto);
+        const day = await this.hireRepository.query(
+            `SELECT date_part('day', age(createRateDate, endRateDate)) AS days FROM hire`,
+        );
+        const sum = await this.hireRepository.query(
+            `SELECT *, (days * rate) AS totalSum FROM hire`,
+        );
+        await this.hireRepository.save(hire, day);
+        return hire;
     }
 
     async findAll(): Promise<Hire[]> {

@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarsModule } from './cars/cars.module';
 import { HireModule } from './hire/hire.module';
+import { Hire } from './hire/hire.entity';
+import { Car } from './cars/car.entity';
 
 @Module({
     imports: [
@@ -20,6 +22,10 @@ import { HireModule } from './hire/hire.module';
             database: process.env.POSTGRES_DB,
             autoLoadEntities: true,
             synchronize: true,
+            migrations: ['migration/*.js'],
+            cli: {
+                migrationsDir: 'migration',
+            },
         }),
     ],
     controllers: [],
