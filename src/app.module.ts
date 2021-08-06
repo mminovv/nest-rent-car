@@ -3,8 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarsModule } from './cars/cars.module';
 import { HireModule } from './hire/hire.module';
-import { Hire } from './hire/hire.entity';
-import { Car } from './cars/car.entity';
+import { RateModule } from './rate/rate.module';
 
 @Module({
     imports: [
@@ -27,6 +26,7 @@ import { Car } from './cars/car.entity';
                 migrationsDir: 'migration',
             },
         }),
+        RateModule,
     ],
     controllers: [],
     providers: [],

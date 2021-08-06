@@ -1,4 +1,4 @@
-import { IsInt, Length, Max, Min, IsNumberString } from 'class-validator';
+import { IsInt, Length, Max, Min, IsNumberString, IsBoolean } from 'class-validator';
 
 export class CreateCarDto {
     @Length(20)
@@ -15,4 +15,7 @@ export class CreateCarDto {
     @IsNumberString()
     @Length(25)
     vin: string;
+
+    @IsBoolean()
+    readonly isAvailable: boolean;
 }

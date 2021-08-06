@@ -1,9 +1,8 @@
 import { Car } from '../../cars/car.entity';
 import { IsInt, IsDate, IsBoolean } from 'class-validator';
+import { Rate } from '../../rate/rate.entity';
 
 export class CreateHireDto {
-    @IsInt()
-    readonly rate: number;
 
     car: Car;
 
@@ -13,6 +12,5 @@ export class CreateHireDto {
     @IsDate()
     readonly endRateDate: string;
 
-    @IsBoolean()
-    readonly isAvailable: boolean;
+    rate: Rate
 }

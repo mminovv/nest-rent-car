@@ -6,19 +6,12 @@ import {
     JoinColumn,
 } from 'typeorm';
 import { Car } from '../cars/car.entity';
+import { Rate } from '../rate/rate.entity';
 
-export enum RateRole {
-    FIRSTRATE = 270,
-    SECONDRATE = 330,
-    THIRDRATE = 390,
-}
+
 
 @Entity()
 export class Hire {
-    /**
-     * The name of Hire car
-     * @example Hire car
-     */
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -29,12 +22,11 @@ export class Hire {
     @JoinColumn()
     car: Car;
 
-    @Column({
-        type: 'enum',
-        enum: RateRole,
-        default: RateRole.FIRSTRATE,
+    @OneToOne(() => Rate, {
+        eager: true,
     })
-    rate: RateRole;
+    @JoinColumn()
+    rate: Rate
 
     @Column({ type: 'date' })
     createRateDate: string;
@@ -42,6 +34,4 @@ export class Hire {
     @Column({ type: 'date' })
     endRateDate: string;
 
-    @Column({ default: false })
-    isAvailable: boolean;
 }

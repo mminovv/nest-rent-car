@@ -3,7 +3,7 @@ import { CreateHireDto } from './dto/create-hire.dto';
 import { UpdateHireDto } from './dto/update-hire.dto';
 import { Hire } from './hire.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder } from 'typeorm';
 
 @Injectable()
 export class HireService {
@@ -12,19 +12,27 @@ export class HireService {
         private readonly hireRepository: Repository<Hire>,
     ) {}
 
-    async create(createHireDto: CreateHireDto): Promise<Hire> {
-        const hire = await this.hireRepository.create(createHireDto);
-        const day = await this.hireRepository.query(
-            `SELECT date_part('day', age(createRateDate, endRateDate)) AS days FROM hire`,
-        );
-        const sum = await this.hireRepository.query(
-            `SELECT *, (days * rate) AS totalSum FROM hire`,
-        );
-        await this.hireRepository.save(hire, day);
+    async create(createHireDto: CreateHireDto) {
+
+        const hire = await this.hireRepository.query(`
+            select
+            "hire.carId",
+            "hire.rateId",
+            "hire.createRateDate",
+            "hire.endRateDate",
+            "hire.endRateDate"::date - "hire.createRateDate"::date as days,
+            (select days * rate.price)
+            from hire, rate
+            `)
+        hire.car = createHireDto.car;
+        hire.rate = createHireDto.rate;
+        hire.createRateDate = createHireDto.createRateDate
+        hire.endRateDate = createHireDto.endRateDate
+        await this.hireRepository.save(hire);
         return hire;
     }
 
-    async findAll(): Promise<Hire[]> {
+    findAll(): Promise<Hire[]> {
         return this.hireRepository.find();
     }
 

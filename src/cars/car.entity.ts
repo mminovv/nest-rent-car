@@ -20,4 +20,7 @@ export class Car {
 
     @OneToOne(() => Hire, (hire: Hire) => hire.car)
     hire: Hire;
+
+    @Column({ default: true })
+    isAvailable: boolean;
 }
