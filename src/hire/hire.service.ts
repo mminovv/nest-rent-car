@@ -5,7 +5,6 @@ import { Hire } from './hire.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-
 @Injectable()
 export class HireService {
     constructor(

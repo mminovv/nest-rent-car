@@ -6,7 +6,7 @@ import {
     Patch,
     Param,
     Delete,
-    UseGuards
+    UseGuards,
 } from '@nestjs/common';
 
 import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
