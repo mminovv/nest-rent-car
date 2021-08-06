@@ -1,12 +1,19 @@
-import { Hire } from '../../hire/hire.entity'
-
+import { Hire } from '../../hire/hire.entity';
+import { IsInt, Length, Max, Min } from 'class-validator';
 
 export class CreateRateDto {
-	name: string;
+    @Length(10, 20, {
+        message: 'Incorrect length!',
+    })
+    name: string;
 
-	price: number;
+    @IsInt()
+    @Min(0)
+    @Max(10)
+    price: number;
 
-	km: number;
+    @IsInt()
+    km: number;
 
-	hire: Hire;
+    hire: Hire;
 }

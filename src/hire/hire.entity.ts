@@ -8,11 +8,8 @@ import {
 import { Car } from '../cars/car.entity';
 import { Rate } from '../rate/rate.entity';
 
-
-
 @Entity()
 export class Hire {
-
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -26,12 +23,11 @@ export class Hire {
         eager: true,
     })
     @JoinColumn()
-    rate: Rate
+    rate: Rate;
 
     @Column({ type: 'date' })
     createRateDate: string;
 
     @Column({ type: 'date' })
     endRateDate: string;
-
 }

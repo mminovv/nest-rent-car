@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarsModule } from './cars/cars.module';
 import { HireModule } from './hire/hire.module';
 import { RateModule } from './rate/rate.module';
+import { UsersModule } from './users/users.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
     imports: [
@@ -19,6 +21,8 @@ import { RateModule } from './rate/rate.module';
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
+            JWT_SECRET: String(process.env.JWT_SECRET),
+            JWT_EXPIRATION_TIME: process.env.JWT_EXPIRATION_TIME,
             autoLoadEntities: true,
             synchronize: true,
             migrations: ['migration/*.js'],
@@ -27,6 +31,8 @@ import { RateModule } from './rate/rate.module';
             },
         }),
         RateModule,
+        UsersModule,
+        AuthenticationModule,
     ],
     controllers: [],
     providers: [],

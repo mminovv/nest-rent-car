@@ -6,7 +6,10 @@ import {
     Patch,
     Param,
     Delete,
+    UseGuards
 } from '@nestjs/common';
+
+import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
 
 import { HireService } from './hire.service';
 import { CreateHireDto } from './dto/create-hire.dto';
@@ -17,6 +20,7 @@ export class HireController {
     constructor(private readonly hireService: HireService) {}
 
     @Post()
+    @UseGuards(JwtAuthenticationGuard)
     create(@Body() createHireDto: CreateHireDto) {
         return this.hireService.create(createHireDto);
     }

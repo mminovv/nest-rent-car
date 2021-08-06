@@ -3,11 +3,11 @@ import { RateService } from './rate.service';
 import { RateController } from './rate.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Hire } from '../hire/hire.entity';
-import { Rate } from './rate.entity'
+import { Rate } from './rate.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Hire, Rate])],
-  controllers: [RateController],
-  providers: [RateService]
+    imports: [TypeOrmModule.forFeature([Hire, Rate])],
+    controllers: [RateController],
+    providers: [RateService],
 })
 export class RateModule {}

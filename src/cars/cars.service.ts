@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,19 +21,31 @@ export class CarsService {
         return this.carRepository.save(car);
     }
 
-    async findAll(): Promise<Car[]> {
+    findAll(): Promise<Car[]> {
         return this.carRepository.find();
     }
 
     async findOne(id: number): Promise<Car> {
-        return this.carRepository.findOne(id);
+        const car = await this.carRepository.findOne(id);
+        if (car) {
+            return car;
+        }
+        throw new HttpException('Car not found', HttpStatus.NOT_FOUND);
     }
 
-    update(id: number, updateCarDto: UpdateCarDto) {
-        return this.carRepository.update(id, updateCarDto);
+    async update(id: number, updateCarDto: UpdateCarDto) {
+        await this.carRepository.update(id, updateCarDto);
+        const updateCar = await this.carRepository.findOne(id);
+        if (updateCar) {
+            return updateCar;
+        }
+        throw new HttpException('Car not found', HttpStatus.NOT_FOUND);
     }
 
     async remove(id: number): Promise<void> {
-        await this.carRepository.delete(id);
+        const removeCar = await this.carRepository.delete(id);
+        if (!removeCar.affected) {
+            throw new HttpException('Car not found', HttpStatus.NOT_FOUND);
+        }
     }
 }
