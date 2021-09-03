@@ -1,7 +1,5 @@
 ## Installation
 
-The app doesn't have some features
-
 ```bash
 $ npm install
 ```
